@@ -13,47 +13,35 @@ public class Main {
 
     public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
-    public static void main(String[] args) {
-
-        while (true) {
-            String homeScreen = """ 
-                                    *************************************
-                                    *         Welcome to Apex Bank       *
-                                    *************************************
-                    
-                                    [D: Add Deposit]      [P:Make Payment]
-                    
-                                    [L: Ledger]           [X:   Exit     ]
-                    
-                    
-                    """;
-            System.out.println(homeScreen);
-            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
-
-            switch (choice) {
-                case "D":
-                   addDeposit();
-                    break;
-
-                case "P":
-                    //method
-                    break;
-
-                case "L":
-                    //method
-                    break;
-
-                case "X":
-                    System.out.println("Exiting bank.....");
-                    return; //use this to exit bank and exit loop
+       public static void main(String[] args) {
 
 
-                default:
-                    System.out.println("Invalid choice please try again!");
-                    break;
 
-            }
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     //create the arraylist that holds the transactions file
@@ -93,6 +81,51 @@ public class Main {
 
 
     //Home Screen Menu methods
+    public static void showHomeScreen(){
+        String homeScreen = """ 
+                                    *************************************
+                                    *         Welcome to Apex Bank       *
+                                    *************************************
+                    
+                                    [D: Add Deposit]      [P:Make Payment]
+                    
+                                    [L: Ledger]           [X:   Exit     ]
+                    
+                    
+                    """;
+        System.out.println(homeScreen);
+
+
+    }
+
+    public static void displayOptions(){
+        String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+
+        switch (choice) {
+            case "D":
+                addDeposit();
+                break;
+
+            case "P":
+                //method
+                break;
+
+            case "L":
+                //method
+                break;
+
+            case "X":
+                System.out.println("Exiting bank.....");
+                return; //use this to exit bank and exit loop
+
+
+            default:
+                System.out.println("Invalid choice please try again!");
+                break;
+
+        }
+
+    }
     public static void addDeposit() {
 
         try {
@@ -123,6 +156,7 @@ public class Main {
     public static void ledgerScreen(){
 
     }
+
 
     //Ledger methods
     public static String ledgerMenu(){
