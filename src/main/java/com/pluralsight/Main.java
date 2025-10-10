@@ -12,7 +12,7 @@ public class Main {
                     public static void main(String[] args) { //
                        // static Scanner scanner;
                        // static ArrayList<transaction> records;
-
+                        System.out.println(readRecordsFromFile());
 
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
