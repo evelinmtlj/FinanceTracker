@@ -10,9 +10,62 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
                     public static void main(String[] args) {
-                       // static Scanner scanner;
-                       // static ArrayList<transaction> records;
-                        System.out.println(readRecordsFromFile());
+
+
+                        String homeScreen = """ 
+                                                *************************************
+                                                *         Welcome to Apex Bank       *
+                                                *************************************
+                                                
+                                                [D: Add Deposit]      [P:Make Payment]
+                                                
+                                                [L: Ledger]           [X:   Exit     ]
+                                                
+                                                
+                                """;
+
+                        while(true) {
+                            System.out.println(homeScreen);
+                            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+
+                            switch (choice){
+                                case "D":
+                                    //method
+                                    break;
+
+                                case "P":
+                                    //method
+                                    break;
+
+                                case "L":
+                                    //method
+                                        break;
+
+                                case "X":
+                                    System.out.println("Exiting bank.....");
+                                    //method
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid choice please try again!");
+                                    break;
+
+
+
+
+
+
+
+                            }
+
+
+
+
+
+
+
+
+                        }
 
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
@@ -23,7 +76,7 @@ public class Main {
 
 
 
-                   //create the arraylist that holds the transactions
+
 
        public  static  ArrayList<transaction> readRecordsFromFile() {
            //array list go with file reader use try/catch
@@ -55,6 +108,6 @@ public class Main {
            }
 
          return records;
-       }
+       } //create the arraylist that holds the transactions
 
 }
