@@ -6,76 +6,60 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-                    public static void main(String[] args) {
 
-                        while(true) {
-                            String homeScreen = """ 
-                                                *************************************
-                                                *         Welcome to Apex Bank       *
-                                                *************************************
-                                                
-                                                [D: Add Deposit]      [P:Make Payment]
-                                                
-                                                [L: Ledger]           [X:   Exit     ]
-                                                
-                                                
-                                """;
-                            System.out.println(homeScreen);
-                            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+    public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
-                            switch (choice){
-                                case "D":
-                                    //method
-                                    break;
+    public static void main(String[] args) {
 
-                                case "P":
-                                    //method
-                                    break;
+        while (true) {
+            String homeScreen = """ 
+                                    *************************************
+                                    *         Welcome to Apex Bank       *
+                                    *************************************
+                    
+                                    [D: Add Deposit]      [P:Make Payment]
+                    
+                                    [L: Ledger]           [X:   Exit     ]
+                    
+                    
+                    """;
+            System.out.println(homeScreen);
+            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
 
-                                case "L":
-                                    //method
-                                        break;
+            switch (choice) {
+                case "D":
+                   addDeposit();
+                    break;
 
-                                case "X":
-                                    System.out.println("Exiting bank.....");
-                                    return; //use this to exit bank and exit loop
+                case "P":
+                    //method
+                    break;
 
+                case "L":
+                    //method
+                    break;
 
-                                default:
-                                    System.out.println("Invalid choice please try again!");
-                                    break;
+                case "X":
+                    System.out.println("Exiting bank.....");
+                    return; //use this to exit bank and exit loop
 
 
+                default:
+                    System.out.println("Invalid choice please try again!");
+                    break;
 
+            }
+        }
+    }
 
-
-
-
-                            }
-
-
-
-
-
-
-
-
-                        }
-
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-
-                   }
-
-
-    public  static  ArrayList<transaction> readRecordsFromFile() {
+    //create the arraylist that holds the transactions file
+    public static ArrayList<Transaction> readRecordsFromFile() {
         //array list go with file reader use try/catch
-        ArrayList<transaction> records = new ArrayList<>();
+        ArrayList<Transaction> records = new ArrayList<>();
 
         try {
             FileReader fileReader = new FileReader("transactions.csv");
@@ -87,15 +71,17 @@ public class Main {
                 //split the file by parts
                 String[] parts = line.split("\\|");
 
-                String date = parts[0];
-                String time = parts[1];
+                LocalDate date = LocalDate.parse(parts[0]);
+                LocalTime time = LocalTime.parse(parts[1]);
                 String description = parts[2];
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
                 // add this
-                transaction t = new transaction(date, time, description, vendor, amount);
+                Transaction t = new Transaction(date,time, description, vendor, amount);
                 records.add(t);
             }
+            bufferedReader.close();
+            fileReader.close();
 
         } catch (IOException e) {
             System.out.println("Transaction file not found! ");
@@ -103,20 +89,58 @@ public class Main {
         }
 
         return records;
-    } //create the arraylist that holds the transactions
+    }
 
 
+    //Home Screen Menu methods
+    public static void addDeposit() {
 
-    public static void addDeposit(){
-        LocalDate date = ConsoleHelper.promptForDate("Enter date of deposit use format yyyy-MM-dd");
-        LocalTime time = ConsoleHelper.promptForTime("Enter time of deposit using format HH:mm:ss");
-        String description = ConsoleHelper.promptForString("Enter description of deposit");
-        String vendor = ConsoleHelper.promptForString("Enter your name ");
-        double amount = ConsoleHelper.promptForFloat("Enter amount");
+        try {
+            LocalDate date = ConsoleHelper.promptForDate("Enter date of deposit use format yyyy-MM-dd");
+            LocalTime time = ConsoleHelper.promptForTime("Enter time of deposit use format HH:mm:ss");
+            String description = ConsoleHelper.promptForString("Enter description of deposit");
+            String vendor = ConsoleHelper.promptForString("Enter your name ");
+            double amount = ConsoleHelper.promptForFloat("Enter amount");
+            // create the deposit
+            Transaction newDeposit = new Transaction(date, time, description, vendor, amount);
+            // add it into the file
+            ledger.add(newDeposit);
 
+            //make sure to save that transaction to the file, too!
+
+            System.out.println("A new deposit has been added!");
+
+        } catch (Exception e) {
+            System.out.println("Deposit could not be added! please try again");
+
+        }
+    }
+
+    public static void makePayment(){
 
     }
 
+    public static void ledgerScreen(){
+
+    }
+
+    //Ledger methods
+    public static String ledgerMenu(){
+        String ledgerMenu = """
+                                     *************************************
+                                    *    Welcome to the Ledger Menu      *
+                                     *************************************
+                    
+                                    [A: All]                 [D: Deposits]
+                    
+                                    [P: Payments]            [R: Reports ]
+                                    
+                                    [H: Home]
+                
+                """;
+        System.out.println(ledgerMenu);
+        return ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+    }
 
 
 }
