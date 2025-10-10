@@ -3,6 +3,8 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,8 +13,8 @@ import java.util.Scanner;
 public class Main {
                     public static void main(String[] args) {
 
-
-                        String homeScreen = """ 
+                        while(true) {
+                            String homeScreen = """ 
                                                 *************************************
                                                 *         Welcome to Apex Bank       *
                                                 *************************************
@@ -23,8 +25,6 @@ public class Main {
                                                 
                                                 
                                 """;
-
-                        while(true) {
                             System.out.println(homeScreen);
                             String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
 
@@ -43,8 +43,8 @@ public class Main {
 
                                 case "X":
                                     System.out.println("Exiting bank.....");
-                                    //method
-                                    break;
+                                    return; //use this to exit bank and exit loop
+
 
                                 default:
                                     System.out.println("Invalid choice please try again!");
@@ -73,41 +73,50 @@ public class Main {
                    }
 
 
+    public  static  ArrayList<transaction> readRecordsFromFile() {
+        //array list go with file reader use try/catch
+        ArrayList<transaction> records = new ArrayList<>();
+
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                //split the file by parts
+                String[] parts = line.split("\\|");
+
+                String date = parts[0];
+                String time = parts[1];
+                String description = parts[2];
+                String vendor = parts[3];
+                double amount = Double.parseDouble(parts[4]);
+                // add this
+                transaction t = new transaction(date, time, description, vendor, amount);
+                records.add(t);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Transaction file not found! ");
+
+        }
+
+        return records;
+    } //create the arraylist that holds the transactions
 
 
 
+    public static void addDeposit(){
+        LocalDate date = ConsoleHelper.promptForDate("Enter date of deposit use format yyyy-MM-dd");
+        LocalTime time = ConsoleHelper.promptForTime("Enter time of deposit using format HH:mm:ss");
+        String description = ConsoleHelper.promptForString("Enter description of deposit");
+        String vendor = ConsoleHelper.promptForString("Enter your name ");
+        double amount = ConsoleHelper.promptForFloat("Enter amount");
 
 
-       public  static  ArrayList<transaction> readRecordsFromFile() {
-           //array list go with file reader use try/catch
-           ArrayList<transaction> records = new ArrayList<>();
+    }
 
-           try {
-               FileReader fileReader = new FileReader("transactions.csv");
-               BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-               String line;
-
-               while ((line = bufferedReader.readLine()) != null) {
-                   //split the file by parts
-                   String[] parts = line.split("\\|");
-
-                   String date = parts[0];
-                   String time = parts[1];
-                   String description = parts[2];
-                   String vendor = parts[3];
-                   double amount = Double.parseDouble(parts[4]);
-                   // add this
-                   transaction t = new transaction(date, time, description, vendor, amount);
-                   records.add(t);
-               }
-
-           } catch (IOException e) {
-               System.out.println("Transaction file not found! ");
-
-           }
-
-         return records;
-       } //create the arraylist that holds the transactions
 
 }

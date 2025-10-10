@@ -1,5 +1,9 @@
 package com.pluralsight;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class ConsoleHelper {
@@ -67,6 +71,31 @@ public class ConsoleHelper {
         return result;
 
 
+    }
+    public static LocalDate promptForDate(String prompt){
+        while(true){
+            try{
+                System.out.print(prompt + ":");
+                String dateAsString = scanner.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                return LocalDate.parse(dateAsString, formatter);
+            }
+            catch (DateTimeException e){
+                System.out.println("Invalid date please enter using format yyyy-MM-dd ");
+            }
+        }
+    }
+    public static LocalTime promptForTime(String prompt){
+        while(true){
+            try{
+                System.out.println(prompt + ":");
+                String timeAsString = scanner.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                return LocalTime.parse(timeAsString, formatter);
+            } catch (Exception e){
+                System.out.println("Invalid time please enter using format HH:mm:ss");
+            }
+        }
     }
 }
 
