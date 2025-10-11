@@ -15,6 +15,8 @@ public class Main {
 
        public static void main(String[] args) {
 
+          showHomeScreen();
+          displayOptions();
 
 
 
@@ -129,12 +131,22 @@ public class Main {
     public static void addDeposit() {
 
         try {
-            LocalDate date = ConsoleHelper.promptForDate("Enter date of deposit use format yyyy-MM-dd");
-            LocalTime time = ConsoleHelper.promptForTime("Enter time of deposit use format HH:mm:ss");
+
             String description = ConsoleHelper.promptForString("Enter description of deposit");
             String vendor = ConsoleHelper.promptForString("Enter your name ");
             double amount = ConsoleHelper.promptForFloat("Enter amount");
+            // Make sure amount is positive
+            if (amount <= 0){
+                System.out.println("Please make sure your payment amount is above zero!");
+                return;
+            }
+            //get current time and date
+
+            LocalDate date = LocalDate.now();
+            LocalTime time = LocalTime.now();
+
             // create the deposit
+            //here amount is positive since we are adding a deposit
             Transaction newDeposit = new Transaction(date, time, description, vendor, amount);
             // add it into the file
             ledger.add(newDeposit);
@@ -145,12 +157,43 @@ public class Main {
 
         } catch (Exception e) {
             System.out.println("Deposit could not be added! please try again");
+            System.out.println("Error:" + e.getMessage());
 
         }
     }
 
     public static void makePayment(){
+        try {
+//making a payment is like negative amounts vs making deposits is like positive amounts
+            String description = ConsoleHelper.promptForString("Enter description of deposit");
+            String vendor = ConsoleHelper.promptForString("Enter your name ");
 
+            double amount = ConsoleHelper.promptForFloat("Enter amount");
+            // check that deposit is always positive
+            if (amount <= 0) {
+                System.out.println("Please make sure your payment amount is above zero!");
+                return;
+            }
+
+            //this will get current time instead of asking
+            LocalDate date = LocalDate.now();
+            LocalTime time = LocalTime.now();
+
+            // create the payment
+            Transaction newPayment = new Transaction(date, time, description, vendor, -amount);
+            // add it into the file
+            ledger.add(newPayment);
+
+            //make sure to save that transaction to the file, too!
+
+            System.out.println("Payment recorded successfully!");
+
+        } catch (Exception e) {
+            System.out.println("Payment unsuccessful ~ Verify your information and try again");
+            System.out.println("Error: " + e.getMessage());
+
+
+        }
     }
 
     public static void ledgerScreen(){

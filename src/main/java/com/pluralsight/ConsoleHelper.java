@@ -11,7 +11,7 @@ public class ConsoleHelper {
 
     public static String promptForString(String prompt) {
         System.out.print(prompt + ": ");
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public static int promptForInt(String prompt) {
@@ -76,7 +76,7 @@ public class ConsoleHelper {
         while(true){
             try{
                 System.out.print(prompt + ":");
-                String dateAsString = scanner.nextLine();
+                String dateAsString = scanner.nextLine().trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 return LocalDate.parse(dateAsString, formatter);
             }
@@ -89,7 +89,7 @@ public class ConsoleHelper {
         while(true){
             try{
                 System.out.println(prompt + ":");
-                String timeAsString = scanner.nextLine();
+                String timeAsString = scanner.nextLine().trim();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 return LocalTime.parse(timeAsString, formatter);
             } catch (Exception e){
