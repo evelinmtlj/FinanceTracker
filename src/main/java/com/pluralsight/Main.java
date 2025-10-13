@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,8 +16,9 @@ public class Main {
 
        public static void main(String[] args) {
 
-          showHomeScreen();
-          displayOptions();
+         showHomeScreen();
+         displayOptions();
+
 
 
 
@@ -79,6 +81,19 @@ public class Main {
         }
 
         return records;
+    }
+    // create a method to store it into files
+    private static void addToFile(Transaction transaction){
+           try{
+               FileWriter fw = new FileWriter("transactions.csv",true);
+               fw.write(transaction.getDate() + "|" +
+                       transaction.getTime() + "|" + transaction.getDescription()
+                       + "|" + transaction.getVendor() + "|" + transaction.getAmount() + "\n");
+               fw.close();
+           } catch (IOException e){
+               System.out.println("Could not save to file");
+           }
+
     }
 
 
@@ -150,8 +165,7 @@ public class Main {
             Transaction newDeposit = new Transaction(date, time, description, vendor, amount);
             // add it into the file
             ledger.add(newDeposit);
-
-            //make sure to save that transaction to the file, too!
+            addToFile(newDeposit);
 
             System.out.println("A new deposit has been added!");
 
@@ -165,10 +179,10 @@ public class Main {
     public static void makePayment(){
         try {
 //making a payment is like negative amounts vs making deposits is like positive amounts
-            String description = ConsoleHelper.promptForString("Enter description of deposit");
-            String vendor = ConsoleHelper.promptForString("Enter your name ");
-
+            String description = ConsoleHelper.promptForString("Enter description of payment");
+            String vendor = ConsoleHelper.promptForString("Enter payor name ");
             double amount = ConsoleHelper.promptForFloat("Enter amount");
+
             // check that deposit is always positive
             if (amount <= 0) {
                 System.out.println("Please make sure your payment amount is above zero!");
@@ -183,16 +197,14 @@ public class Main {
             Transaction newPayment = new Transaction(date, time, description, vendor, -amount);
             // add it into the file
             ledger.add(newPayment);
+            //save to file
+            addToFile(newPayment);
 
-            //make sure to save that transaction to the file, too!
-
-            System.out.println("Payment recorded successfully!");
+            System.out.println("Payment confirmed!");
 
         } catch (Exception e) {
             System.out.println("Payment unsuccessful ~ Verify your information and try again");
             System.out.println("Error: " + e.getMessage());
-
-
         }
     }
 
