@@ -10,3 +10,8 @@ screenshots of <img width="1470" height="956" alt="image" src="https://github.co
 ^ also made some improvements to be more specifit when asking the user about deposits
 <img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/61a6a657-b389-40e1-a8b2-293e58f776aa" />
 ^ used the same method with deposits and payments but chaged some words and the amount type
+<img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/ca7f2ef9-9866-45ee-a87e-a82e97c75397" />
+^ created  a method to display recent transactions used array list since that is where my file is in
+for (int i = transactions.size() - 1; i >= 0; i--) {
+    System.out.println(transactions.get(i));
+this means int i = transactions.size()-1 starts at the last item in the file thanks to -1, i >= 0 it will keep going in a loop displaying until it get to the last transaction 0, i-- means it decreases and shows the transactions moving backward
