@@ -211,7 +211,7 @@ public class Main {
                     break;
 
                 case "P":
-                    //method
+                    displayPayments();
                     break;
 
                 case "R":
@@ -254,7 +254,21 @@ public class Main {
 
     }
 
-    public static void displayPayments() {
+    public static void displayPayments(ArrayList<Transaction>transactions) {
+        System.out.println("=========... Displaying Payments ========");
+        boolean payments = false;
+
+        for(int i = transactions.size()-1; i>=0; i--){
+            Transaction t = transactions.get(i);
+
+            if(t.getAmount()<0){
+                System.out.println(t);
+                payments=  true;
+            }
+        }
+            if (!payments){
+                System.out.println("No payments found!");
+            }
 
     }
 
