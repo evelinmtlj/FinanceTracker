@@ -14,10 +14,10 @@ public class Main {
 
     public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
-       public static void main(String[] args) {
+    public static void main(String[] args) {
 
-         homeScreen();
-         displayOptions();
+        homeScreen();
+        displayOptions();
 
 
     }
@@ -43,7 +43,7 @@ public class Main {
                 String vendor = parts[3];
                 double amount = Double.parseDouble(parts[4]);
                 // add this
-                Transaction t = new Transaction(date,time, description, vendor, amount);
+                Transaction t = new Transaction(date, time, description, vendor, amount);
                 transactions.add(t);
             }
             bufferedReader.close();
@@ -56,65 +56,66 @@ public class Main {
 
         return transactions;
     }
+
     // create a method to store it into files
-    private static void addToFile(Transaction transaction){
-           try{
-               FileWriter fw = new FileWriter("transactions.csv",true);//append true means it adds it to the end of file
-               fw.write(transaction.toString()+ "\n" );
-               fw.close();
-           } catch (IOException e){
-               System.out.println("Could not save to file");
-           }
+    private static void addToFile(Transaction transaction) {
+        try {
+            FileWriter fw = new FileWriter("transactions.csv", true);//append true means it adds it to the end of file
+            fw.write(transaction.toString() + "\n");
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Could not save to file");
+        }
 
     }
 
 
     //Method do display HS and options
-    public static void homeScreen(){
+    public static void homeScreen() {
         String homeScreen = """ 
-                                    *************************************
-                                    *         Welcome to Apex Bank       *
-                                    *************************************
-                    
-                                    [D: Add Deposit]      [P:Make Payment]
-                    
-                                    [L: Ledger]           [X:   Exit     ]
-                    
-                    
-                    """;
+                                *************************************
+                                *         Welcome to Apex Bank       *
+                                *************************************
+                
+                                [D: Add Deposit]      [P:Make Payment]
+                
+                                [L: Ledger]           [X:   Exit     ]
+                
+                
+                """;
         System.out.println(homeScreen);
 
 
     }
 
-    public static void displayOptions(){
+    public static void displayOptions() {
 
-           while (true){
-            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+        while (true) {
+            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
 
-               switch (choice) {
-                   case "D":
-                       addDeposit();
-                       break;
+            switch (choice) {
+                case "D":
+                    addDeposit();
+                    break;
 
-                   case "P":
-                       makePayment();
-                       break;
+                case "P":
+                    makePayment();
+                    break;
 
-                   case "L":
-                       ledgerScreen();
-                       break;
+                case "L":
+                    ledgerScreen();
+                    break;
 
-                   case "X":
-                       System.out.println("Goodbye! Come back soon to Apex Bank.");
-                       return;//use this to exit bank and exit loop
+                case "X":
+                    System.out.println("Goodbye! Come back soon to Apex Bank.");
+                    return;//use this to exit bank and exit loop
 
 
-                   default:
-                       System.out.println("Invalid choice please try again!");
-                       break;
-               }
-           }
+                default:
+                    System.out.println("Invalid choice please try again!");
+                    break;
+            }
+        }
 
     }
 
@@ -127,7 +128,7 @@ public class Main {
             String vendor = ConsoleHelper.promptForString("Where is this deposit from (ex: employer,friend, refund from store)");
             double amount = ConsoleHelper.promptForFloat("Enter amount $");
             // Make sure amount is positive
-            if (amount <= 0){
+            if (amount <= 0) {
                 System.out.println("Please make sure your payment amount is above zero!");
                 return;
             }
@@ -152,7 +153,7 @@ public class Main {
         }
     } //it's like you get paid from work and add it into your bank +money
 
-    public static void makePayment(){
+    public static void makePayment() {
         try {
 //making a payment is like negative amounts vs making deposits is like positive amounts
             String description = ConsoleHelper.promptForString("Enter description of payment (ex: rent,movie tickets,groceries) ");
@@ -185,9 +186,8 @@ public class Main {
     } // (debit) ex: paying for groceries or any expenses -money
 
 
-
     //Ledger screen display and options
-    public static void ledgerScreen(){
+    public static void ledgerScreen() {
         String ledgerScreen = """
                                     *************************************
                                     *         Welcome to ledger screen   *
@@ -199,39 +199,59 @@ public class Main {
                                          [H: Back to home screen ]
                 """;
         System.out.println(ledgerScreen);
+
     }
-    public static String ledgerMenu(){
-        String ledgerMenu = """
-                                     *************************************
-                                    *    Welcome to the Ledger Menu      *
-                                     *************************************
-                
-                                    [A: All]                 [D: Deposits]
-                
-                                    [P: Payments]            [R: Reports ]
-                
-                                    [H: Home]
-                
-                """;
-        System.out.println(ledgerMenu);
-        return ConsoleHelper.promptForString("Enter your choice").toUpperCase();
+
+    public static String ledgerMenu() {
+        while (true) {
+            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
+            switch (choice) {
+                case "A":
+                    //method
+                    break;
+
+                case "D":
+                    //method
+                    break;
+
+                case "P":
+                    //method
+                    break;
+
+                case "R":
+                    //method
+                    break;
+
+                case "H":
+                    System.out.println("Going back to home screen......");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice please try again!");
+                    break;
+            }
+
+        }
     }
+
+
     //methods for ledger menu
-    public static void all(){
+    public static void all() {
 
     }
 
-    public static void deposits(){
+    public static void deposits() {
 
     }
 
-    public static void payments(){
+    public static void payments() {
 
     }
 
-    public static void reports(){
+    public static void reports() {
 
     }
-
 
 }
+
+
