@@ -8,16 +8,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 public class Main {
 
     public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
     public static void main(String[] args) {
 
-        homeScreen();
-        displayOptions();
+        homeScreenMenu();
 
 
     }
@@ -70,27 +68,25 @@ public class Main {
     }
 
 
-    //Method do display HS and options
-    public static void homeScreen() {
+
+    public static void homeScreenMenu() {
+
         String homeScreen = """ 
                                 *************************************
                                 *         Welcome to Apex Bank       *
                                 *************************************
                 
-                                [D: Add Deposit]      [P:Make Payment]
+                                [D: Add Deposit]      [P:Make Payment (debit)]
                 
                                 [L: Ledger]           [X:   Exit     ]
                 
                 
                 """;
-        System.out.println(homeScreen);
 
+        while (true) { //keeps the loop going
 
-    }
+            System.out.println(homeScreen);
 
-    public static void displayOptions() {
-
-        while (true) {
             String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
 
             switch (choice) {
@@ -103,7 +99,7 @@ public class Main {
                     break;
 
                 case "L":
-                    ledgerScreen();
+                    ledgerMenu();
                     break;
 
                 case "X":
@@ -186,28 +182,28 @@ public class Main {
     } // (debit) ex: paying for groceries or any expenses -money
 
 
-    //Ledger screen display and options
-    public static void ledgerScreen() {
+    public static void ledgerMenu() {
+
         String ledgerScreen = """
                                     *************************************
                                     *         Welcome to ledger screen   *
                                     *************************************
+                                      Choose what you would like to display
                 
-                                    [A: All ]             [D: Deposits ]
+                                    [A: All]             [D: Deposits ]
                 
                                     [P: Payments]         [R:  Reports ]
                                          [H: Back to home screen ]
                 """;
-        System.out.println(ledgerScreen);
 
-    }
-
-    public static String ledgerMenu() {
         while (true) {
+
+            System.out.println(ledgerScreen);
             String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
+
             switch (choice) {
                 case "A":
-                    //method
+                    displayAll(transactions);
                     break;
 
                 case "D":
@@ -224,33 +220,39 @@ public class Main {
 
                 case "H":
                     System.out.println("Going back to home screen......");
-                    return;
+                    return; //exits and goes back to hs
 
                 default:
                     System.out.println("Invalid choice please try again!");
-                    break;
             }
 
         }
     }
 
-
     //methods for ledger menu
-    public static void all() {
+    public static void displayAll(ArrayList<Transaction> transactions)  {
+        System.out.println("=======Displaying newest entries=======");
+        for (int i = transactions.size()-1;i >=0;i--){
+            System.out.println(transactions.get(i));
+        }
+
 
     }
 
-    public static void deposits() {
+    public static void displayDeposits() {
 
     }
 
-    public static void payments() {
+    public static void displayPayments() {
 
     }
 
     public static void reports() {
 
     }
+
+
+
 
 }
 
