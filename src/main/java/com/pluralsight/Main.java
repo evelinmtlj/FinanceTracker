@@ -203,11 +203,11 @@ public class Main {
 
             switch (choice) {
                 case "A":
-                    displayAll(transactions);
+                    displayAll();
                     break;
 
                 case "D":
-                    //method
+                    displayDeposits();
                     break;
 
                 case "P":
@@ -239,7 +239,18 @@ public class Main {
 
     }
 
-    public static void displayDeposits() {
+    public static void displayDeposits(ArrayList<Transaction>transactions) {
+        System.out.println("====== ...Displaying Deposits =======");
+        boolean deposits = false;
+
+        for(int i = transactions.size()-1; i>=0;i--){
+            Transaction t = transactions.get(i);
+
+            if(t.getAmount()>0){
+                System.out.println(t);
+                deposits=true;
+            }
+        }
 
     }
 
