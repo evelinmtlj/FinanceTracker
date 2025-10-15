@@ -135,6 +135,7 @@ public class Main {
             addToFile(newDeposit);
 
             System.out.println("A new deposit has been added!");
+            System.out.println(newDeposit);
 
         } catch (Exception e) {
             System.out.println("Deposit could not be added! please try again");
