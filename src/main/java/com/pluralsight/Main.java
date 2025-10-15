@@ -1,11 +1,7 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.io.*; //includes BufferedReader,FileReader,FileWrite,IO ex
+import java.time.*; //includes LocalDate,LocalTime
 import java.util.ArrayList;
 
 
@@ -16,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
         homeScreenMenu();
+
 
 
     }
@@ -30,6 +27,8 @@ public class Main {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             String line;
+            //skips the first line
+            bufferedReader.readLine();
 
             while ((line = bufferedReader.readLine()) != null) {
                 //split the file by parts
@@ -203,19 +202,19 @@ public class Main {
 
             switch (choice) {
                 case "A":
-                    displayAll();
+                    displayAll(ledger);
                     break;
 
                 case "D":
-                    displayDeposits();
+                    displayDeposits(ledger);
                     break;
 
                 case "P":
-                    displayPayments();
+                    displayPayments(ledger);
                     break;
 
                 case "R":
-                    //method
+                    reports();
                     break;
 
                 case "H":
@@ -284,10 +283,10 @@ public class Main {
         String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
         switch (choice){
             case "1":
-                //method
+               displayMonthToDate(ledger);
                 break;
             case "2":
-                //method
+                displayPreviousMonth(ledger);
                 break;
             case"3":
                 //method
@@ -310,8 +309,70 @@ public class Main {
 
     }
 
+    //methods for reports menu
+
+    private static void displayMonthToDate(ArrayList<Transaction>transactions){
+        System.out.println("===== Month to date =======");
+
+        LocalDate today = LocalDate.now(); //today's date
+        LocalDate firstDay = today.withDayOfMonth(1); //gets first day of this month
+        int count = 0; //keeps track of how many matches I found
+
+        for(int i = transactions.size() -1; i>=0; i--){
+            Transaction t = transactions.get(i);
+            LocalDate date = t.getDate();
+
+            //checks between the first of the month and today
+            if(!date.isBefore(firstDay) && !date.isAfter(today)){
+                System.out.println(t);
+                count++;
+            }
+        }
+
+       if (count==0){
+           System.out.println("No records were found for this month.");
+       }
+    }
+
+    private static void displayPreviousMonth(ArrayList<Transaction>transactions){
+        System.out.println("========= Previous months =========");
+
+        YearMonth currentMonth = YearMonth.now(); //gets current year and month
+        YearMonth previousMonth = currentMonth.minusMonths(1); //goes back to last month
+
+        int count = 0; //keep track of transactions found
+
+        for(int i = transactions.size()-1; i>=0; i--){  //keeps looping backwards
+            Transaction t = transactions.get(i); //gets one transaction
+            LocalDate date = t.getDate(); // gets the date
+
+            //converts transaction to format year month
+            YearMonth transactionMonth = YearMonth.from(date);
+            //checks it transaction happened in previous month
+            if(transactionMonth.equals(previousMonth)) {
+                System.out.println(t);
+                 count++; //adds one transaction
+            }
+        }
+        if (count ==0){
+            System.out.println("No records from the previous month!");
+        }
 
 
+    }
+
+    private static void displayYearToDate(ArrayList<Transaction>transactions){
+        LocalDate today = LocalDate.now();
+
+    }
+
+    private static void displayPreviousYear(){
+
+    }
+
+    private static void searchByVendor(){
+
+    }
 
 }
 
