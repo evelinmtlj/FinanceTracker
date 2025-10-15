@@ -236,7 +236,7 @@ public class Main {
 
     public static void displayDeposits() {
         System.out.println("====== ...Displaying Deposits =======");
-        boolean deposits = false;
+        int count = 0;
 
         for(int i = ledger.size()-1; i>=0;i--){
             Transaction t = ledger.get(i);
