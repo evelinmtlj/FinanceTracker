@@ -168,6 +168,7 @@ public class Main {
             addToFile(newPayment);
 
             System.out.println("Payment confirmed!");
+            System.out.println(newPayment);
 
         } catch (Exception e) {
             System.out.println("Payment unsuccessful ~ Verify your information and try again");
