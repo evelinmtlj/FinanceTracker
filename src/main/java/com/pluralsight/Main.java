@@ -13,11 +13,7 @@ public class Main {
 
         homeScreenMenu();
 
-
-
-
     }
-
     //create the arraylist that holds the transactions file
     public static ArrayList<Transaction> readRecordsFromFile() {
         //array list go with file reader use try/catch
@@ -66,9 +62,7 @@ public class Main {
         }
 
     }
-
-
-
+    //--------Home Screen---------------
     public static void homeScreenMenu() {
 
         String homeScreen = """ 
@@ -115,7 +109,7 @@ public class Main {
 
     }
 
-    //Home screen methods
+    //******** HOME SCREEN METHODS *********
     public static void addDeposit() {
 
         try {
@@ -180,8 +174,7 @@ public class Main {
             System.out.println("Error: " + e.getMessage());
         }
     } // (debit) ex: paying for groceries or any expenses -money
-
-
+    //--------Ledger--------------
     public static void ledgerMenu() {
 
         String ledgerScreen = """
@@ -229,7 +222,7 @@ public class Main {
         }
     }
 
-    //-------methods for ledger menu-----
+    //******* LEDGER METHODS ************
     public static void displayAll()  {
         System.out.println("=======Displaying newest entries=======");
         for (int i = ledger.size()-1;i >=0;i--){
@@ -270,6 +263,7 @@ public class Main {
 
     }
 
+     // ----------Reports--------------
     public static void reportsMenu() {
        String reportsScreen = """
                                    *************************************
@@ -313,7 +307,7 @@ public class Main {
 
     }
 
-    // ----methods for reportsMenu menu----
+    // ********* REPORTS METHODS ***************
 
     private static void displayMonthToDate(){
         System.out.println("===== Month to date =======");
@@ -322,12 +316,11 @@ public class Main {
         LocalDate firstDay = today.withDayOfMonth(1); //gets first day of this month
         int count = 0; //keeps track of how many matches I found
 
-        for(int i = ledger.size() -1; i>=0; i--){
-            Transaction t = ledger.get(i);
+        for(Transaction t : ledger){
             LocalDate date = t.getDate();
 
-            //checks between the first of the month and today
-            if(!date.isBefore(firstDay) && !date.isAfter(today)){
+            //checks if transaction is from this month
+            if(!date.isBefore(firstDay)){
                 System.out.println(t);
                 count++;
             }
@@ -339,19 +332,15 @@ public class Main {
     }
 
     private static void displayPreviousMonth(){
-        System.out.println("========= Previous months =========");
+        System.out.println("========= Previous month =========");
 
-        YearMonth currentMonth = YearMonth.now(); //gets current year and month
-        YearMonth previousMonth = currentMonth.minusMonths(1); //goes back to last month
+        YearMonth previousMonth = YearMonth.now().minusMonths(1); //goes back to last month
 
         int count = 0; //keep track of transactions found
 
-        for(int i = ledger.size()-1; i>=0; i--){  //keeps looping backwards
-            Transaction t = ledger.get(i); //gets one transaction
-            LocalDate date = t.getDate(); // gets the date
+        for(Transaction t : ledger){
+            YearMonth transactionMonth = YearMonth.from(t.getDate());
 
-            //converts transaction to format year month
-            YearMonth transactionMonth = YearMonth.from(date);
             //checks it transaction happened in previous month
             if(transactionMonth.equals(previousMonth)) {
                 System.out.println(t);
@@ -368,19 +357,14 @@ public class Main {
     private static void displayYearToDate(){
         System.out.println("======= Year to date =========");
 
-        LocalDate today = LocalDate.now();
         //first day of the current year ex january 1,2025
-        LocalDate startOfYear = LocalDate.of(today.getYear(), 1,1);
+        LocalDate startOfYear = LocalDate.of(LocalDate.now().getYear(),1,1);
 
         //keep track
         int count = 0;
         //loops through all transactions
-        for(int i = ledger.size()-1;i>=0; i--){
-            Transaction t = ledger.get(i);
-            //gets date
-            LocalDate date = t.getDate();
-
-            if(!date.isBefore(startOfYear)){
+        for(Transaction t: ledger){
+            if(!t.getDate().isBefore(startOfYear)){
                 System.out.println(t);
                 count++;
             }
@@ -391,7 +375,19 @@ public class Main {
     }
 
     private static void displayPreviousYear(){
+        System.out.println("======= Previous Year =======");
+       int lastYear = LocalDate.now().getYear()-1;
+       int count = 0;
 
+       for(Transaction t: ledger) {
+           if(t.getDate().getYear() == lastYear) {
+               System.out.println(t);
+               count++;
+           }
+       }
+      if(count==0){
+          System.out.println("No records found from previous year");
+      }
     }
 
     private static void searchByVendor(){
