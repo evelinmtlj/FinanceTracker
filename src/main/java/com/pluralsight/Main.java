@@ -151,7 +151,7 @@ public class Main {
             String vendor = ConsoleHelper.promptForString("Enter payee name ");
             double amount = ConsoleHelper.promptForFloat("Enter amount $");
 
-            // check that deposit is always positive
+
             if (amount <= 0) {
                 System.out.println("Please make sure your payment amount is above zero!");
                 return;
