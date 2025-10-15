@@ -17,3 +17,5 @@ for (int i = transactions.size() - 1; i >= 0; i--) {
 this means int i = transactions.size()-1 starts at the last item in the file thanks to -1, i >= 0 it will keep going in a loop displaying until it get to the last transaction 0, i-- means it decreases and shows the transactions moving backward
 <img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/90062dcb-a067-41fe-8105-f4a2bb8cd8d9" />
 ^ here i created another method similar to get displays but this one is for display payments, since payments are negative i had to modify the code 
+<img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/60360e14-6eb5-4c07-a288-1db01399d706" />
+method to display transactions for month
