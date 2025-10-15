@@ -289,13 +289,13 @@ public class Main {
                 displayPreviousMonth(ledger);
                 break;
             case"3":
-                //method
+                displayYearToDate(ledger);
                 break;
             case "4":
                 //method
                 break;
             case "5":
-                //method
+                searchByVendor(ledger);
                 break;
             case "0":
                 System.out.println("...Going back to ledger menu......");
@@ -363,14 +363,38 @@ public class Main {
 
     private static void displayYearToDate(ArrayList<Transaction>transactions){
         LocalDate today = LocalDate.now();
+        //first day of the current year
+        LocalDate startOfYear = LocalDate.of(today.getYear(), 1,1);
 
+        //keep track
+        int count = 0;
+        for(int i = transactions.size()-1;i>=0; i--){
+            Transaction t = transactions.get(i);
+
+            LocalDate date = t.getDate();
+            //check if transactions are between start of year and todays
+        }
     }
 
     private static void displayPreviousYear(){
 
     }
 
-    private static void searchByVendor(){
+    private static void searchByVendor(ArrayList<Transaction>transactions){
+        String vendor = ConsoleHelper.promptForString("Enter the name of vendor you wish to search for");
+        System.out.println("Transactions matching: " + vendor);
+
+        boolean found = false; //checks if it matches
+
+        for(Transaction t : transactions){
+            if(t.getVendor().toLowerCase().contains(vendor.toLowerCase())){
+                System.out.println(t);
+                found = true; //check if we found one match at least
+            }
+        }
+            if (!found){
+                System.out.println("No transactions found matching:" + vendor);
+            }
 
     }
 
