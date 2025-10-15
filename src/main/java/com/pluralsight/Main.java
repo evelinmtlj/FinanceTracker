@@ -266,13 +266,47 @@ public class Main {
                 payments=  true;
             }
         }
-            if (!payments){
-                System.out.println("No payments found!");
-            }
+
 
     }
 
     public static void reports() {
+       String reportsScreen = """
+                                   *************************************
+                                    *     Welcome to reports screen    *
+                                    *************************************
+               
+                                   [1: Month to date]       [2: Previous month]
+                                   [3: Year to date]        [4: Previous year]
+                                   [5: Search by vendor]    [0: Back to ledger menu]
+               """;
+
+        String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
+        switch (choice){
+            case "1":
+                //method
+                break;
+            case "2":
+                //method
+                break;
+            case"3":
+                //method
+                break;
+            case "4":
+                //method
+                break;
+            case "5":
+                //method
+                break;
+            case "0":
+                System.out.println("...Going back to ledger menu......");
+                return;
+            default:
+                System.out.println("Invalid choice please try again!");
+                break;
+        }
+
+
 
     }
 
