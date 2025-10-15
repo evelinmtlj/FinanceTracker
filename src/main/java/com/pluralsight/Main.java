@@ -252,8 +252,7 @@ public class Main {
     public static void displayPayments() {
         System.out.println("=========... Displaying Payments ========");
 
-        for(int i = ledger.size()-1; i>=0; i--){
-            Transaction t = ledger.get(i);
+        int count = 0;
 
             if(t.getAmount()<0){
                 System.out.println(t);
