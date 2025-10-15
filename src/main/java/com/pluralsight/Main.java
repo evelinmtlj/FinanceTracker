@@ -251,7 +251,6 @@ public class Main {
 
     public static void displayPayments() {
         System.out.println("=========... Displaying Payments ========");
-        boolean payments = false;
 
         for(int i = ledger.size()-1; i>=0; i--){
             Transaction t = ledger.get(i);
