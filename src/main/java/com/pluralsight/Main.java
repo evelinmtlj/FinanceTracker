@@ -15,6 +15,7 @@ public class Main {
 
 
 
+
     }
 
     //create the arraylist that holds the transactions file
@@ -202,19 +203,19 @@ public class Main {
 
             switch (choice) {
                 case "A":
-                    displayAll(ledger);
+                    displayAll();
                     break;
 
                 case "D":
-                    displayDeposits(ledger);
+                    displayDeposits();
                     break;
 
                 case "P":
-                    displayPayments(ledger);
+                    displayPayments();
                     break;
 
                 case "R":
-                    reports();
+                    reportsMenu();
                     break;
 
                 case "H":
@@ -228,22 +229,22 @@ public class Main {
         }
     }
 
-    //methods for ledger menu
-    public static void displayAll(ArrayList<Transaction> transactions)  {
+    //-------methods for ledger menu-----
+    public static void displayAll()  {
         System.out.println("=======Displaying newest entries=======");
-        for (int i = transactions.size()-1;i >=0;i--){
-            System.out.println(transactions.get(i));
+        for (int i = ledger.size()-1;i >=0;i--){
+            System.out.println(ledger.get(i));
         }
 
 
     }
 
-    public static void displayDeposits(ArrayList<Transaction>transactions) {
+    public static void displayDeposits() {
         System.out.println("====== ...Displaying Deposits =======");
         boolean deposits = false;
 
-        for(int i = transactions.size()-1; i>=0;i--){
-            Transaction t = transactions.get(i);
+        for(int i = ledger.size()-1; i>=0;i--){
+            Transaction t = ledger.get(i);
 
             if(t.getAmount()>0){
                 System.out.println(t);
@@ -253,12 +254,12 @@ public class Main {
 
     }
 
-    public static void displayPayments(ArrayList<Transaction>transactions) {
+    public static void displayPayments() {
         System.out.println("=========... Displaying Payments ========");
         boolean payments = false;
 
-        for(int i = transactions.size()-1; i>=0; i--){
-            Transaction t = transactions.get(i);
+        for(int i = ledger.size()-1; i>=0; i--){
+            Transaction t = ledger.get(i);
 
             if(t.getAmount()<0){
                 System.out.println(t);
@@ -269,7 +270,7 @@ public class Main {
 
     }
 
-    public static void reports() {
+    public static void reportsMenu() {
        String reportsScreen = """
                                    *************************************
                                     *     Welcome to reports screen    *
@@ -279,47 +280,50 @@ public class Main {
                                    [3: Year to date]        [4: Previous year]
                                    [5: Search by vendor]    [0: Back to ledger menu]
                """;
+        while (true) {
+            System.out.println(reportsScreen);
+            String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
 
-        String choice = ConsoleHelper.promptForString("Enter your choice").toUpperCase().trim();
-        switch (choice){
-            case "1":
-               displayMonthToDate(ledger);
-                break;
-            case "2":
-                displayPreviousMonth(ledger);
-                break;
-            case"3":
-                displayYearToDate(ledger);
-                break;
-            case "4":
-                //method
-                break;
-            case "5":
-                searchByVendor(ledger);
-                break;
-            case "0":
-                System.out.println("...Going back to ledger menu......");
-                return;
-            default:
-                System.out.println("Invalid choice please try again!");
-                break;
+
+            switch (choice) {
+                case "1":
+                    displayMonthToDate();
+                    break;
+                case "2":
+                    displayPreviousMonth();
+                    break;
+                case "3":
+                    displayYearToDate();
+                    break;
+                case "4":
+                    displayPreviousYear();
+                    break;
+                case "5":
+                    searchByVendor();
+                    break;
+                case "0":
+                    System.out.println("...Going back to ledger menu......");
+                    return;
+                default:
+                    System.out.println("Invalid choice please try again!");
+                    break;
+            }
+
         }
-
-
 
     }
 
-    //methods for reports menu
+    // ----methods for reportsMenu menu----
 
-    private static void displayMonthToDate(ArrayList<Transaction>transactions){
+    private static void displayMonthToDate(){
         System.out.println("===== Month to date =======");
 
         LocalDate today = LocalDate.now(); //today's date
         LocalDate firstDay = today.withDayOfMonth(1); //gets first day of this month
         int count = 0; //keeps track of how many matches I found
 
-        for(int i = transactions.size() -1; i>=0; i--){
-            Transaction t = transactions.get(i);
+        for(int i = ledger.size() -1; i>=0; i--){
+            Transaction t = ledger.get(i);
             LocalDate date = t.getDate();
 
             //checks between the first of the month and today
@@ -334,7 +338,7 @@ public class Main {
        }
     }
 
-    private static void displayPreviousMonth(ArrayList<Transaction>transactions){
+    private static void displayPreviousMonth(){
         System.out.println("========= Previous months =========");
 
         YearMonth currentMonth = YearMonth.now(); //gets current year and month
@@ -342,8 +346,8 @@ public class Main {
 
         int count = 0; //keep track of transactions found
 
-        for(int i = transactions.size()-1; i>=0; i--){  //keeps looping backwards
-            Transaction t = transactions.get(i); //gets one transaction
+        for(int i = ledger.size()-1; i>=0; i--){  //keeps looping backwards
+            Transaction t = ledger.get(i); //gets one transaction
             LocalDate date = t.getDate(); // gets the date
 
             //converts transaction to format year month
@@ -361,18 +365,28 @@ public class Main {
 
     }
 
-    private static void displayYearToDate(ArrayList<Transaction>transactions){
+    private static void displayYearToDate(){
+        System.out.println("======= Year to date =========");
+
         LocalDate today = LocalDate.now();
-        //first day of the current year
+        //first day of the current year ex january 1,2025
         LocalDate startOfYear = LocalDate.of(today.getYear(), 1,1);
 
         //keep track
         int count = 0;
-        for(int i = transactions.size()-1;i>=0; i--){
-            Transaction t = transactions.get(i);
-
+        //loops through all transactions
+        for(int i = ledger.size()-1;i>=0; i--){
+            Transaction t = ledger.get(i);
+            //gets date
             LocalDate date = t.getDate();
-            //check if transactions are between start of year and todays
+
+            if(!date.isBefore(startOfYear)){
+                System.out.println(t);
+                count++;
+            }
+        }
+        if (count==0){
+            System.out.println("No records found for the current year");
         }
     }
 
@@ -380,13 +394,13 @@ public class Main {
 
     }
 
-    private static void searchByVendor(ArrayList<Transaction>transactions){
+    private static void searchByVendor(){
         String vendor = ConsoleHelper.promptForString("Enter the name of vendor you wish to search for");
         System.out.println("Transactions matching: " + vendor);
 
         boolean found = false; //checks if it matches
 
-        for(Transaction t : transactions){
+        for(Transaction t : ledger){
             if(t.getVendor().toLowerCase().contains(vendor.toLowerCase())){
                 System.out.println(t);
                 found = true; //check if we found one match at least
