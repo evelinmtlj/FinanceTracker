@@ -10,8 +10,8 @@ public class Main {
     public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
     public static void main(String[] args) {
+         homeScreenMenu();
 
-        homeScreenMenu();
 
     }
     //create the arraylist that holds the transactions file
@@ -238,15 +238,16 @@ public class Main {
         System.out.println("====== ...Displaying Deposits =======");
         int count = 0;
 
-        for(int i = ledger.size()-1; i>=0;i--){
-            Transaction t = ledger.get(i);
-
+        for(Transaction t: ledger){
             if(t.getAmount()>0){
                 System.out.println(t);
-                deposits=true;
+                count++;
+
             }
         }
-
+        if(count==0) {
+            System.out.println("No deposits found");
+        }
     }
 
     public static void displayPayments() {
@@ -254,12 +255,16 @@ public class Main {
 
         int count = 0;
 
+        for(Transaction t : ledger){
             if(t.getAmount()<0){
                 System.out.println(t);
-                payments=  true;
+                count++;
+
             }
         }
-
+         if(count ==0){
+             System.out.println("No payments found");
+         }
 
     }
 
@@ -313,32 +318,37 @@ public class Main {
         System.out.println("===== Month to date =======");
 
         LocalDate today = LocalDate.now(); //today's date
-        LocalDate firstDay = today.withDayOfMonth(1); //gets first day of this month
+        LocalDate firstDay = today.withDayOfMonth(1); //change to day 1 of this month
         int count = 0; //keeps track of how many matches I found
 
         for(Transaction t : ledger){
             LocalDate date = t.getDate();
 
-            //checks if transaction is from this month
-            if(!date.isBefore(firstDay)){
-                System.out.println(t);
+            //checks if transaction is after 1st day or equals the 1st of the month
+            if(date.isAfter(firstDay) || date.isEqual(firstDay)){
+                System.out.println(t); //yes print out the transaction
                 count++;
             }
         }
 
-       if (count==0){
+       if (count==0){ //if not print this out
            System.out.println("No records were found for this month.");
        }
     }
 
     private static void displayPreviousMonth(){
         System.out.println("========= Previous month =========");
-
-        YearMonth previousMonth = YearMonth.now().minusMonths(1); //goes back to last month
+            /*yearMonth.now gives current month and year
+            minusMonths goes back to last month only
+            if you wish to go back more you can subtract
+            3 or 12
+             */
+        YearMonth previousMonth = YearMonth.now().minusMonths(1);
 
         int count = 0; //keep track of transactions found
 
-        for(Transaction t : ledger){
+        for(Transaction t : ledger){ //loops through each transaction
+            //extracting only month & year
             YearMonth transactionMonth = YearMonth.from(t.getDate());
 
             //checks it transaction happened in previous month
@@ -364,7 +374,8 @@ public class Main {
         int count = 0;
         //loops through all transactions
         for(Transaction t: ledger){
-            if(!t.getDate().isBefore(startOfYear)){
+            //checks if transactions are after jan-1 or equals jan-1
+            if(t.getDate().isAfter(startOfYear) || t.getDate().isEqual(startOfYear)){
                 System.out.println(t);
                 count++;
             }
@@ -376,10 +387,11 @@ public class Main {
 
     private static void displayPreviousYear(){
         System.out.println("======= Previous Year =======");
-       int lastYear = LocalDate.now().getYear()-1;
+       int lastYear = LocalDate.now().getYear()-1; // gets last year
        int count = 0;
 
        for(Transaction t: ledger) {
+           //grabs the full date only gets the year and compares it
            if(t.getDate().getYear() == lastYear) {
                System.out.println(t);
                count++;
@@ -394,15 +406,15 @@ public class Main {
         String vendor = ConsoleHelper.promptForString("Enter the name of vendor you wish to search for");
         System.out.println("Transactions matching: " + vendor);
 
-        boolean found = false; //checks if it matches
+       int count = 0;
 
         for(Transaction t : ledger){
             if(t.getVendor().toLowerCase().contains(vendor.toLowerCase())){
                 System.out.println(t);
-                found = true; //check if we found one match at least
+                count++;
             }
         }
-            if (!found){
+            if (count ==0){
                 System.out.println("No transactions found matching:" + vendor);
             }
 
