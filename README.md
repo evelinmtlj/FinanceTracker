@@ -19,3 +19,5 @@ this means int i = transactions.size()-1 starts at the last item in the file tha
 ^ here i created another method similar to get displays but this one is for display payments, since payments are negative i had to modify the code 
 <img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/60360e14-6eb5-4c07-a288-1db01399d706" />
 method to display transactions for month
+<img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/0a3f6972-6b86-4243-b5ba-71a51b99da93" />
+^ created methods to be similar to this one to print previous month,year
