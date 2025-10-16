@@ -10,6 +10,10 @@ public class Main {
     public static ArrayList<Transaction> ledger = readRecordsFromFile();
 
     public static void main(String[] args) {
+
+        String RED_TEXT = "\u001B[31m";
+
+        System.out.println(RED_TEXT);
          homeScreenMenu();
 
 
