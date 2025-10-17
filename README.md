@@ -1,3 +1,41 @@
+Finance Tracker
+
+Finance Tracker is a simple console-based application that helps users track deposits, payments, and view financial reports. It saves all transactions to a CSV file and allows for easy viewing of transaction history
+Home Screen
+
+The home screen gives users the following options. The application continues running until the user chooses to exit:
+D) Add Deposit – Prompts the user for deposit information and saves it to the CSV file.
+P) Make Payment (Debit) – Prompts the user for debit information and saves it to the CSV file.
+L) Ledger – Displays the ledger screen with all transaction history.
+X) Exit – Exits the application.
+
+Ledger
+
+The ledger displays transactions with the newest entries first. Users have multiple options to filter and view transactions:
+A) All – Displays all transactions.
+D) Deposits – Displays only deposits (positive entries).
+P) Payments – Displays only payments (negative entries).
+R) Reports – Opens the reports screen to run predefined reports or custom searches:
+1) Month To Date – Shows all transactions from the current month.
+2) Previous Month – Shows all transactions from the previous month.
+3) Year To Date – Shows all transactions from the current year.
+4) Previous Year – Shows all transactions from the previous year.
+5) Search by Vendor – Prompts the user for a vendor name and displays all transactions associated with that vendor.
+0) Back – Returns to the Ledger page.
+H) Home – Returns to the Home Screen.
+
+Usage
+Run the application.
+
+Choose an option from the Home Screen.
+
+Follow prompts to add deposits, make payments, or view transaction history.
+
+Navigate through the ledger and reports to analyze your financial data.
+
+Choose X) Exit to close the application.
+
+
 created the file that holds the transactions. also created another class that holds the constructor and getters
 created an arraylist that will hold the transaction and split it into appropriate parts
 <img width="1470" height="956" alt="image" src="https://github.com/user-attachments/assets/99c42eda-634d-49aa-aef4-243671063966" />
